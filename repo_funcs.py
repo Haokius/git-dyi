@@ -3,7 +3,6 @@ import os
 from gitrepo import GitRepository
 from repo_paths import repo_dir, repo_file
 
-
 def repo_default_config():
     ret = configparser.ConfigParser()
 
@@ -17,7 +16,6 @@ def repo_default_config():
     ret.set("core", "bare", "false")  # indicates that this repo has a worktree
 
     return ret
-
 
 def repo_create(path):
     """Create a new repository at the given path"""
@@ -50,7 +48,6 @@ def repo_create(path):
         config.write(file)
 
     return repo
-
 
 def repo_find(path=".", required=True):
     path = os.path.realpath(path)

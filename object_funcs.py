@@ -1,6 +1,8 @@
 from repo_paths import repo_file
 import zlib
 import hashlib
+import os
+from objects import GitBlob, GitCommit
 
 
 def object_read(repo, sha):
@@ -53,6 +55,25 @@ def object_write(obj, repo=None):
                 file.write(zlib.compress(result))
 
     return sha
+
+
+def object_hash(fd, fmt, repo=None):
+    """Hash object, writing it to repo if provided"""
+    data = fd.read()
+
+    match fmt:
+        case b"commit":
+            obj = GitCommit(data)
+        case b"tree":
+            obj = GitTree(data)
+        case b"tag":
+            obj = GitTag(data)
+        case b"blob":
+            obj = GitBlob(data)
+        case _:
+            raise Exception(f"Unknown type {fmt}")
+
+    return object_write(obj, repo)
 
 
 def object_find(repo, name, fmt=None, follow=True):

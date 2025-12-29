@@ -1,6 +1,5 @@
 import os
 
-
 def repo_path(repo, *path):
     """Compute path under the repo's git directory"""
     # putting * in front of path makes the function variadic, so it can take multiple args
